@@ -230,6 +230,49 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
 
 .navrow{display:flex;gap:8px;margin-top:14px}
 .navrow .btn{flex:1}
+
+/* ── decision game ── */
+.budg{display:flex;justify-content:space-between;align-items:center;margin-top:11px;padding-top:9px;
+  border-top:1px solid var(--line);font-family:var(--mono);font-size:8.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--dim)}
+.budg b{color:var(--purple)}
+.flash{display:flex;justify-content:space-between;align-items:center;gap:9px;padding:11px 12px;border-radius:11px;
+  border:1px dashed var(--line);margin-top:6px;font-size:12.5px;color:var(--mut);cursor:pointer;line-height:1.45}
+.flash:hover{border-color:var(--purple);color:var(--cream)}
+.flash .fn{font-family:var(--mono);font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:3px}
+.flash .cst{font-family:var(--mono);font-size:9.5px;color:var(--purple);white-space:nowrap}
+.flash.open{border-style:solid;border-color:var(--purple);background:rgba(143,119,239,.09);color:var(--cream);cursor:default}
+.flash.open .fn{color:var(--purple)}
+.flash.shut{opacity:.32;cursor:not-allowed}
+.flash.shut:hover{border-color:var(--line);color:var(--mut)}
+.rsplit{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:11px}
+.rsplit div{border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:8px 4px;text-align:center}
+.rsplit small{display:block;font-family:var(--mono);font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:var(--cream);opacity:.75}
+.rsplit b{display:block;font-family:var(--disp);font-size:19px;line-height:1.1;margin-top:3px}
+.dql{margin-top:10px;font-size:13px;line-height:1.5;color:var(--paper);font-style:italic}
+
+/* ── architecture ── */
+.arch{margin-top:12px}
+.ablk{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px;margin-top:9px}
+.ablk .ag{font-family:var(--disp);text-transform:uppercase;font-size:17px;letter-spacing:.05em;color:var(--paper);text-align:center}
+.ablk .aa{font-family:var(--mono);font-size:12px;color:var(--dim);text-align:center;padding:3px 0}
+.achips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.achip{border:1px solid var(--purple);border-radius:8px;padding:6px 9px;font-family:var(--mono);
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--purple)}
+.achip.r{border-color:var(--gold);color:var(--gold)}
+.aconv{text-align:center;font-family:var(--mono);font-size:13px;color:var(--dim);padding:6px 0;letter-spacing:.4em}
+.grp .gf{margin-top:7px;font-family:var(--mono);font-size:7.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim)}
+.grp .gf b{color:var(--purple)}
+.grp.none .gf b{color:var(--red)}
+.room{margin-top:11px;background:linear-gradient(160deg,rgba(143,119,239,.14),var(--card));
+  border:1px solid var(--purple);border-radius:20px;padding:17px 15px}
+.room .rt{font-family:var(--disp);text-transform:uppercase;font-size:clamp(22px,6vw,34px);line-height:1.05;color:var(--purple)}
+.fl{display:flex;gap:9px;align-items:flex-start;margin-top:8px;font-size:12.5px;color:var(--cream);line-height:1.5}
+.fl .fi{font-family:var(--mono);font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:var(--purple);
+  white-space:nowrap;padding-top:2px;width:52px;flex:0 0 52px}
+.crit{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.crit span{border:1px solid var(--line);border-radius:6px;padding:5px 8px;font-family:var(--mono);
+  font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
 </style>
 </head>
 <body class="pre">
@@ -237,11 +280,10 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
 <div id="top">
   <div id="rail">
     <div class="rr" data-j="0">01 Name</div>
-    <div class="rr" data-j="1">02 Sure</div>
-    <div class="rr" data-j="2">03 Far</div>
-    <div class="rr" data-j="3">04 Info</div>
-    <div class="rr" data-j="4">05 You</div>
-    <div class="rr" data-j="5">06 Idea</div>
+    <div class="rr" data-j="1">02 Far</div>
+    <div class="rr" data-j="2">03 Decide</div>
+    <div class="rr" data-j="3">04 You</div>
+    <div class="rr" data-j="4">05 Idea</div>
   </div>
   <div id="hud">
     <span id="hudL"><button class="nbtn" id="mBtn">☰ sections</button><span id="hudT">concept · unofficial</span></span>
@@ -253,12 +295,11 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
   <div class="lbl" style="margin-bottom:14px">jump to</div>
   <div class="mi" data-j="s0">Start<span>landing</span></div>
   <div class="mi" data-j="0">01 · Name It<span>what is this called</span></div>
-  <div class="mi" data-j="1">02 · Conviction<span>how sure</span></div>
-  <div class="mi" data-j="2">03 · How Far<span>how big</span></div>
-  <div class="mi" data-j="3">04 · Information<span>how much</span></div>
-  <div class="mi" data-j="4">05 · Decision Profile<span>your four numbers</span></div>
-  <div class="mi" data-j="5">06 · The Idea<span>a learning space</span></div>
-  <div class="mi" data-j="6">07 · The Thesis<span>ending</span></div>
+  <div class="mi" data-j="1">02 · How Far<span>how big</span></div>
+  <div class="mi" data-j="2">03 · The Decision<span>when do you know enough</span></div>
+  <div class="mi" data-j="3">04 · Decision Profile<span>your three numbers</span></div>
+  <div class="mi" data-j="4">05 · The Idea<span>a learning space</span></div>
+  <div class="mi" data-j="5">06 · The Thesis<span>ending</span></div>
   <button class="btn ghost" id="mClose" style="margin-top:14px;width:100%;max-width:400px">Close</button>
 </div>
 
@@ -267,12 +308,11 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
 <section class="scr on" id="s0"><div class="col">
   <div class="kick">OpenTrade · concept experiment</div>
   <h1><span class="a">How do you</span><br>actually make<br><span class="b">decisions?</span></h1>
-  <p class="sub">OpenTrade asks <b>higher</b> or <b>lower</b>. But a decision contains more than a direction. Four experiments — then an idea for turning what they find into somewhere you actually get better.</p>
+  <p class="sub">OpenTrade asks <b>higher</b> or <b>lower</b>. But a decision contains more than a direction. Three experiments — then an idea for turning what they find into somewhere you actually get better.</p>
   <div class="three">
-    <div class="th"><b>Name it</b><small>what is this</small></div>
-    <div class="th"><b>Conviction</b><small>how sure</small></div>
-    <div class="th"><b>How far</b><small>how big</small></div>
-    <div class="th"><b>Info</b><small>how much</small></div>
+    <div class="th"><b>Name it</b><small>recognition</small></div>
+    <div class="th"><b>How far</b><small>magnitude</small></div>
+    <div class="th"><b>Decision</b><small>decision quality</small></div>
   </div>
   <button class="btn cta gold" id="go" style="margin-top:20px">START EXPERIMENT</button>
   <div class="foot">unofficial concept · not affiliated with opentrade<br>every outcome is a real next-session close</div>
@@ -292,10 +332,14 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
     <div class="wtop"><b id="tk">—</b><span><span class="pill" id="dif">—</span> <span class="dd" id="dt">—</span></span></div>
     <div class="head" id="hd">—</div>
     <div class="ctx" id="cx">—</div>
-    <div id="clues"></div>
     <div class="srcline" id="src">—</div>
+    <div id="fbox" style="display:none">
+      <div class="budg"><span id="bleft">3 more things you could find out</span><span id="bspent">spent <b>0</b></span></div>
+      <div id="flashes"></div>
+    </div>
     <div class="ask" id="ask">Will it close higher or lower?</div>
   </div>
+  <button class="btn cta purp" id="enough" style="display:none;margin-top:9px">ENOUGH — MAKE THE CALL</button>
   <div class="dirs" id="dirs">
     <button class="btn dir lo" data-d="0">↓ Lower</button>
     <button class="btn dir hi" data-d="1">Higher ↑</button>
@@ -317,7 +361,10 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
     <button class="btn cta gold" id="lockR" style="margin-top:6px">LOCK THE RANGE</button>
   </div>
   <div class="rev" id="rev">
-    <div class="r1" id="r1">—</div><div class="r2" id="r2">—</div><div class="r3" id="r3">—</div>
+    <div class="r1" id="r1">—</div><div class="r2" id="r2">—</div>
+    <div class="rsplit" id="rsp" style="display:none"></div>
+    <div class="dql" id="dql" style="display:none">—</div>
+    <div class="r3" id="r3">—</div>
     <div class="r4"><div class="n" id="r4n">—</div><div class="m" id="r4m">—</div></div>
   </div>
   <button class="btn cta paper" id="nextb" style="display:none;margin-top:8px">NEXT →</button>
@@ -329,6 +376,7 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
   <div class="lbl" style="text-align:center">three experiments · one player</div>
   <div class="mti" style="margin-top:5px">Your decision profile</div>
   <div id="axes" style="margin-top:12px"></div>
+  <div id="sub"></div>
   <div class="verd p"><div class="lbl">read</div><div class="v" id="pv" style="margin-top:7px">—</div></div>
   <button class="btn cta gold" id="toRate" style="margin-top:14px">NOW THE IDEA →</button>
   <div class="navrow"><button class="btn ghost" id="pBack">← Back</button></div>
@@ -337,38 +385,39 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
 <section class="scr" id="s5"><div class="sc"><div class="col">
   <span class="pill g">an idea · not a current opentrade feature</span>
   <div class="h2" style="margin-top:11px">A score you can't train is just a <em>scoreboard.</em></div>
-  <p class="p">Those four numbers describe how I decide. XP, streak and coins describe how often I turn up. Only one of those is worth getting better at.</p>
+  <p class="p">Those three numbers describe how I decide. XP, streak and coins describe how often I turn up. Only one of those is worth getting better at.</p>
   <p class="p">So here's the idea, in three steps.</p>
 
   <div class="sec">
     <div class="lbl">step one</div>
-    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Measure the skill, not the game</div>
-    <p class="p">A score in one game can't be compared to a score in another. But underneath, every market game is testing one of a small number of abilities. Name those abilities and the scores become comparable — and, far more useful, <b>trainable</b>.</p>
+    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">A game is not a skill</div>
+    <p class="p">This is the part that usually gets collapsed. One game does not equal one rating. A well-built game can measure <b>several</b> abilities at once — the third experiment you just played measures three of them in a single round.</p>
+    <p class="p">Separate the two layers and the whole thing becomes comparable, and far more useful, <b>trainable</b>.</p>
     <div id="grps"></div>
   </div>
 
   <div class="sec">
     <div class="lbl">step two</div>
-    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Roll them into one number</div>
-    <p class="p">Average the skills — but weight each by how confident you are in it. A skill measured over 200 rounds should count for more than one measured over three.</p>
+    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Game → skill → rating → one number</div>
+    <p class="p">Every round you play updates the skills that round actually tested. Those skill ratings roll up into a single figure — weighted by how confident the system is in each one, so a skill measured over 200 rounds counts for more than one measured over three.</p>
+    <div class="arch" id="arch"></div>
     <div class="iqbox">
       <div class="lbl">market iq</div>
       <div id="iq">1,264</div>
-      <div class="iqrd" id="iqrd">± 118 · illustrative</div>
-      <p class="note">The <b style="color:var(--gold)">±</b> is the important half. Two players can both read 1,264 — one after five rounds, one after five hundred. The ± is what tells them apart, and it narrows as you play.</p>
+      <div class="iqrd">illustrative figure · not a real rating</div>
     </div>
   </div>
 
   <div class="sec">
     <div class="lbl">step three · the part that matters</div>
-    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Build a game for every skill</div>
+    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Then send people somewhere</div>
     <p class="p">A rating on its own just tells you that you're bad at something. It doesn't give you anywhere to go. <b>That's the gap.</b></p>
-    <p class="p">Give every skill its own game — built specifically to train that one thing — and the loop closes into somewhere you actually improve:</p>
+    <p class="p">Once a skill is named and measured, a game can be built to train that one thing — and the loop closes into somewhere you actually improve:</p>
     <div class="flow">
       <div class="fnode">you play</div><div class="farr">↓</div>
-      <div class="fnode hl">a skill moves</div><div class="farr">↓</div>
+      <div class="fnode hl">the skills that round tested move</div><div class="farr">↓</div>
       <div class="fnode iqn">market iq</div><div class="farr">↓</div>
-      <div class="fnode hl">your worst skill</div><div class="farr">↓</div>
+      <div class="fnode hl">your weakest skill</div><div class="farr">↓</div>
       <div class="fnode">the game built to train it</div><div class="farr">↓</div>
       <div class="fnode">play that one</div>
     </div>
@@ -376,11 +425,25 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
   </div>
 
   <div class="sec">
-    <div class="lbl">the ladder</div>
-    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Games that would have to be built</div>
-    <p class="p">These don't exist yet. That's the point. Four of them are playable in this prototype; the rest are the ones I'd build next.</p>
-    <div id="ladder"></div>
-    <div class="warn"><b>Why this order.</b> You can't reason about something you can't name, you can't size a move before you can call one, and you can't know when to stop researching until you know what your confidence is worth. Each rung only makes sense once the one below it is solid.</div>
+    <div class="lbl">and then · a glimpse</div>
+    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Where this could eventually go</div>
+    <p class="p">The three experiments are single decisions. Real markets are a stream of them — information keeps arriving and you keep having to respond. That's the version worth eventually building.</p>
+    <div class="room">
+      <div class="lbl">future concept · not built · not proposed as existing</div>
+      <div class="rt" style="margin-top:6px">Market Room</div>
+      <p class="p" style="margin-top:8px">Ten players enter the same scenario with the same small pot of virtual capital. Then information starts arriving, in flashes, on a clock.</p>
+      <div style="margin-top:11px">
+        <div class="fl"><span class="fi">flash 01</span><span>The company announces something.</span></div>
+        <div class="fl"><span class="fi">flash 02</span><span>Analysts react — and disagree with each other.</span></div>
+        <div class="fl"><span class="fi">flash 03</span><span>The price starts moving before you've decided.</span></div>
+        <div class="fl"><span class="fi">flash 04</span><span>A second number lands that complicates the first.</span></div>
+        <div class="fl"><span class="fi">flash 05</span><span>Something nobody modelled.</span></div>
+      </div>
+      <p class="p" style="margin-top:11px">Throughout, everyone is deciding the same things in real time: enter or wait, how much to commit, hold or cut, and whether the newest flash actually changes the thesis or just feels like it does.</p>
+      <p class="p">And at the end, the winner is <b>not</b> whoever happened to make the most money. One lucky maximum-size bet is not a good decision. It could score the thing that actually transfers:</p>
+      <div class="crit"><span>return</span><span>risk taken</span><span>timing</span><span>conviction</span><span>response to new information</span><span>decision quality</span></div>
+      <p class="note" style="text-align:left;margin-top:11px">A compressed live-market decision tournament. Same information, same clock, everyone graded on how they handled it. It doesn't exist — in this prototype or anywhere else. It's just the direction all of this points.</p>
+    </div>
   </div>
 
   <button class="btn cta gold" id="toEnd" style="margin-top:16px">FINISH →</button>
@@ -391,7 +454,7 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
   <div class="h2" style="font-size:clamp(22px,6vw,38px)">OpenTrade doesn't have to just tell you <em>whether you were right.</em></div>
   <div class="h2" style="margin-top:14px;font-size:clamp(22px,6vw,38px);color:var(--gold)">It could tell you how you think.</div>
   <div style="margin-top:20px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);line-height:2.2">
-    direction · conviction · magnitude<br>information · deduction · tempo</div>
+    recognition · magnitude · direction<br>conviction · information efficiency</div>
   <div class="farr">↓</div>
   <div class="dsp" style="font-size:clamp(28px,8.4vw,52px);color:var(--gold)">Market IQ</div>
   <a class="btn cta purp" href="https://www.opentrade.live/" target="_blank" rel="noopener" style="margin-top:20px;text-decoration:none">PLAY OPENTRADE →</a>
@@ -462,32 +525,6 @@ name:[
   a:"A circuit breaker",o:["A circuit breaker","A trading curb","A lockup","A suspension"],
   w:"It exists to interrupt panic. It also means you cannot get out during the exact moment you most want to."}
 ],
-conv:[
- {t:"NFLX",n:"Netflix",dt:"19 APR 2022",lv:"EASY",d:1180,src:"REP",
-  h:"Netflix loses subscribers for the first time in a decade",
-  c:"Lost roughly 200,000 subscribers and guided to a further loss ahead.",
-  up:0,m:-35,w:"The one metric the whole thesis rested on went backwards."},
- {t:"NVDA",n:"Nvidia",dt:"24 MAY 2023",lv:"EASY",d:1210,src:"REP",
-  h:"Nvidia guides revenue about 50% above Wall Street",
-  c:"Guided the coming quarter near $11B against expectations around $7B, citing AI demand.",
-  up:1,m:24,w:"A guide that far above consensus isn't priced in by definition."},
- {t:"DIS",n:"Disney",dt:"08 NOV 2022",lv:"EASY",d:1240,src:"OT",
-  h:"Disney's streaming loss reaches $1.5 billion",
-  c:"Disney+ added subscribers, but streaming lost nearly twice as much money as a year earlier.",
-  up:0,m:-13.16,w:"The growing loss outweighed the subscriber adds."},
- {t:"CRM",n:"Salesforce",dt:"29 MAY 2024",lv:"HARD",d:1620,src:"OT",
-  h:"Salesforce posts record free cash flow",
-  c:"Free cash flow rose 43% — a company record — but next-quarter revenue was guided to grow only 7–8%.",
-  up:0,m:-19.74,w:"The weaker forecast mattered more than the record cash. Good headline, bad guide."},
- {t:"META",n:"Meta",dt:"02 FEB 2023",lv:"HARD",d:1560,src:"REP",
-  h:"Meta announces a year of cost cuts and a $40bn buyback",
-  c:"Framed the year ahead around efficiency and headcount discipline after a bruising 2022.",
-  up:1,m:22,w:"Cost discipline read as a return to profitability. Austerity was the bull case."},
- {t:"NVDA",n:"Nvidia",dt:"27 JAN 2025",lv:"HARD",d:1690,src:"REP",
-  h:"A Chinese lab releases a model it says was trained far more cheaply",
-  c:"DeepSeek's release raised questions about how much compute frontier AI actually needs. Nvidia itself reported nothing.",
-  up:0,m:-17,w:"Nothing about Nvidia changed. The story about how much hardware the world needs did."}
-],
 rng:[
  {t:"GOOGL",n:"Alphabet",dt:"08 FEB 2023",lv:"SMALL",d:1420,src:"REP",
   h:"Google's new AI gives a wrong answer in its own demo video",
@@ -510,69 +547,87 @@ rng:[
   c:"Told investors the macro environment had deteriorated faster than expected, weeks after guiding.",
   m:-43,w:"Cutting your own guidance mid-quarter is the loudest signal a company can send."}
 ],
-info:[
- {t:"META",n:"Meta",dt:"02 FEB 2022",lv:"EASY",d:1220,src:"REP",
-  h:"Meta reports its first ever drop in daily users",
-  c:"",up:0,m:-26,w:"Growth stories are priced on growth.",
-  cl:[["What else was in the report","Revenue still grew, but Reality Labs losses widened materially.",10],
-      ["Where the stock was","Shares were close to an all-time high going into the print.",15]]},
- {t:"SNAP",n:"Snap",dt:"23 MAY 2022",lv:"EASY",d:1150,src:"REP",
-  h:"Snap warns it will miss its own quarterly targets",
-  c:"",up:0,m:-43,w:"Cutting your own guidance mid-quarter is the loudest possible signal.",
-  cl:[["What else was in the report","The warning came only weeks after the company had issued that guidance.",10],
-      ["Where the stock was","Ad-dependent names had already been selling off through the spring.",15]]},
- {t:"GOOGL",n:"Alphabet",dt:"08 FEB 2023",lv:"MEDIUM",d:1420,src:"REP",
-  h:"Google's new AI gives a wrong answer in its own demo video",
-  c:"",up:0,m:-8,w:"Embarrassing, and badly timed.",
-  cl:[["What else was happening","A competitor had announced its own AI search product the day before.",10],
-      ["The underlying business","Search advertising revenue was still growing at the time.",15]]},
- {t:"INTC",n:"Intel",dt:"23 APR 2026",lv:"HARD",d:1650,src:"OT",
-  h:"Intel revenue climbs 7.2%",
-  c:"",up:1,m:23.60,w:"Expectations were low enough that ordinary growth was a surprise.",
-  cl:[["Recent history","Revenue had been declining year on year in prior periods.",10],
-      ["Positioning","Sentiment going into the print was defensive.",15]]},
- {t:"GME",n:"GameStop",dt:"26 JAN 2021",lv:"HARD",d:1740,src:"REP",
-  h:"GameStop becomes the most shorted stock in America",
-  c:"",up:1,m:135,w:"Fundamentals stopped setting the price. Positioning did.",
-  cl:[["The float","Short interest exceeded the entire available float.",10],
-      ["Who was buying","Retail traders were coordinating purchases publicly and in size.",15]]}
+/* dec: the merged decision game.
+   Each scenario opens on a deliberately thin headline. The three flashes are the
+   things that actually determine the move — what was expected, what was guided,
+   how the stock was positioned. That is the whole argument: the headline number
+   is almost never enough, and knowing that is the skill.                       */
+dec:[
+ {t:"NKE",n:"Nike",dt:"30 SEP 2022",lv:"HARD",d:1610,src:"REP",
+  h:"Nike revenue grows 4% to $12.7 billion",
+  up:0,m:-12.8,
+  w:"Revenue grew. It made almost no difference. The market was pricing the inventory that still had to be discounted, not the quarter that had already happened.",
+  fl:[["What else was in the report","Inventory was up around 44% on a year earlier, and the company said it would clear it with markdowns.",10],
+      ["What that does to margins","Gross margin fell, and management pointed to more discounting ahead.",15],
+      ["How it was set up","The shares had already been sliding for most of the year on demand worries.",20]]},
+ {t:"NVDA",n:"Nvidia",dt:"25 MAY 2023",lv:"HARD",d:1580,src:"REP",
+  h:"Nvidia reports revenue of about $7.2 billion — down roughly 13% on a year earlier",
+  up:1,m:24,
+  w:"The quarter that just ended was shrinking. The quarter being forecast was around 50% above what the market had modelled. Price follows the forecast.",
+  fl:[["Against expectations","The reported quarter itself came in slightly ahead of what analysts were looking for.",10],
+      ["What they guided","The coming quarter was guided near $11 billion, against expectations closer to $7 billion.",15],
+      ["The reason given","Management put it down to data-centre demand for AI training.",20]]},
+ {t:"CRM",n:"Salesforce",dt:"30 MAY 2024",lv:"HARD",d:1620,src:"OT",
+  h:"Salesforce posts record free cash flow",
+  up:0,m:-19.74,
+  w:"Record cash, punished anyway. A company priced for durable double-digit growth guided to single digits — and that is the number that mattered.",
+  fl:[["The rest of the quarter","Revenue came in a touch below what the market expected.",10],
+      ["What they guided","Next-quarter revenue was guided to grow only about 7–8%.",15],
+      ["What was priced in","The name was being valued on the assumption of durable double-digit growth.",20]]},
+ {t:"SNAP",n:"Snap",dt:"24 MAY 2022",lv:"EASY",d:1150,src:"REP",
+  h:"Snap tells investors it will miss its own quarterly targets",
+  up:0,m:-43,
+  w:"Cutting your own guidance mid-quarter is the loudest signal a company can send. Very little extra information was needed here — and that is worth noticing too.",
+  fl:[["When that guidance was issued","Less than a month earlier.",10],
+      ["The reason given","It said conditions had deteriorated faster than anticipated.",15],
+      ["Who else it touched","Most of the online advertising complex sold off with it.",20]]},
+ {t:"META",n:"Meta",dt:"02 FEB 2023",lv:"HARD",d:1560,src:"REP",
+  h:"Meta reports another year-on-year decline in revenue",
+  up:1,m:22,
+  w:"The results were still going backwards. What changed was the promise of spending discipline, to a market that had stopped believing costs would ever come down.",
+  fl:[["What management committed to","A flatter structure, headcount discipline and lower expense guidance for the year ahead.",10],
+      ["The capital return","A $40 billion increase to the buyback authorisation.",15],
+      ["Where the stock had been","It had lost the majority of its value over the previous year.",20]]},
+ {t:"INTC",n:"Intel",dt:"23 APR 2026",lv:"MEDIUM",d:1430,src:"OT",
+  h:"Intel revenue climbs 7.2% to $13.6 billion",
+  up:1,m:23.60,
+  w:"Ordinary growth against very low expectations produces an outsized move. The number was unremarkable. The bar it cleared was not.",
+  fl:[["Recent history","Revenue had been declining year on year in prior periods.",10],
+      ["What was expected","Expectations going into the print were low.",15],
+      ["Positioning","Sentiment on the name was defensive.",20]]}
 ]};
 
 var MODES=[
  {k:"name",no:"01",ti:"Name It",n:6,
   su:"You can't reason about something you can't name. Six real situations, described in plain English. What is each one called?",warn:""},
- {k:"conv",no:"02",ti:"Conviction",n:6,
-  su:"Being right isn't the whole skill. Call it — then say how sure you are. Hedging at 50% is mathematically safe and worth nothing.",warn:""},
- {k:"rng",no:"03",ti:"How Far",n:5,
+ {k:"rng",no:"02",ti:"How Far",n:5,
   su:"Higher or lower collapses −8% and −43% into the same answer. Don't pick a direction. Draw the range it lands in.",
-  warn:"These five range from single digits to over forty percent. Working out which kind of day this is — that's the actual skill."},
- {k:"info",no:"04",ti:"Price of Information",n:5,
-  su:"Call it now, or pay points to know more. At the end: was the information worth anything?",
-  warn:"The context cards are illustrative prototype copy written to demonstrate the mechanic, not sourced analyst notes. Five rounds proves nothing statistically."}
+  warn:"These five range from single digits to over forty percent. They are not a representative sample of market days — real sessions are mostly small. Working out which kind of day this is is the actual skill."},
+ {k:"dec",no:"03",ti:"The Decision",n:5,
+  su:"You open on a headline that isn't enough to decide with. You can find out more — but every piece costs you. Then call it, and say how much you believe it.",
+  warn:"Two things are measured at once: how much information you needed, and whether the confidence you claimed was earned. The flash cards are written from what was reported at the time; every outcome is the real next-session close."}
 ];
 
+/* skills ≠ games. one game can move several of these. */
 var GRP=[
- ["Recognition","can you name what you are looking at",0],
- ["Direction","can you read which way a situation resolves",0],
- ["Magnitude","can you size how far it moves, not just where",0],
- ["Conviction","does your confidence actually mean anything",0],
- ["Information","how much do you need before you commit",0],
- ["Tempo","does thinking longer make you better or just slower",0]
+ ["Recognition","can you name what you are looking at","Name It"],
+ ["Magnitude","can you size how far it moves, not just where","How Far"],
+ ["Direction","can you read which way a situation resolves","The Decision"],
+ ["Conviction","does the confidence you claim match how often you're right","The Decision"],
+ ["Information Efficiency","do you know when you have heard enough","The Decision"],
+ ["Speed","does thinking longer make you better, or just slower",""]
 ];
-var LADDER=[
- ["Name It","built","A situation in plain English. What is it called? Trains recognition — the rung everything else stands on."],
- ["Conviction","built","Call it, then size how sure you are. Trains calibration, and punishes hedging with arithmetic."],
- ["How Far","built","Draw the range instead of picking a direction. The width of your band is your uncertainty."],
- ["Price of Information","built","Call now, or pay to know more. Trains knowing when to stop researching."],
- ["Change Your Mind","to build","You commit, then new information arrives. Keep or switch? Separates conviction from stubbornness."],
- ["The Clock","to build","Score decays every second you wait. Finds the decision speed at which you are personally sharpest."],
- ["Fade The Crowd","to build","See what everyone else answered, then choose. Tests whether you have an edge or just agree well."]
+/* game → the skills that game would move */
+var ARCH=[
+ ["Name It","one situation, in plain English. what is it called?",["Recognition"]],
+ ["How Far","draw the band the move lands in. width = your uncertainty.",["Magnitude"]],
+ ["The Decision","buy information or don't. then commit, with a number on it.",["Direction","Conviction","Information Efficiency"]]
 ];
 
 var MIN=-50,MAX=50;
 var st={};
-function fresh(){st={mode:0,i:0,order:[],recs:{name:[],conv:[],rng:[],info:[]},dir:null,conf:50,
-  lo:-8,hi:8,drag:null,locked:false,score:0,spent:0,phase:"dir",done:[false,false,false,false]}}
+function fresh(){st={mode:0,i:0,order:[],recs:{name:[],rng:[],dec:[]},dir:null,conf:50,
+  lo:-8,hi:8,drag:null,locked:false,score:0,spent:0,used:0,cost:0,phase:"dir",done:[false,false,false]}}
 fresh();
 
 function sh(a){for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),t=a[k];a[k]=a[j];a[j]=t}return a}
@@ -581,7 +636,7 @@ function show(id){["s0","s1","s2","s3","s4","s5","s6"].forEach(function(k){$(k).
   var sc=document.querySelector("#"+id+" .sc"); if(sc)sc.scrollTop=0;}
 function rail(i){[].forEach.call(document.querySelectorAll(".rr"),function(e,k){
   e.classList.toggle("on",k===i);
-  e.classList.toggle("done", k<4 ? st.done[k] : false)})}
+  e.classList.toggle("done", k<3 ? !!st.done[k] : false)})}
 function word(p){return p<56?"coin flip":p<66?"a hunch":p<76?"leaning":p<86?"confident":p<95?"very confident":"certain"}
 function pos(v){return (v-MIN)/(MAX-MIN)*100}
 function srcTxt(s){return s.src==="TERM"?"a situation you will meet in real markets":s.src==="OT"?"figure seen inside opentrade's news game":"widely reported · rounded"}
@@ -591,10 +646,10 @@ function jump(j){
   $("menu").classList.remove("on");
   if(j==="s0"){show("s0");rail(-1);return}
   j=Number(j);
-  if(j<=3){st.mode=j;modeIntro()}
-  else if(j===4){profile()}
-  else if(j===5){rating()}
-  else {rail(5);$("hudT").textContent="the decision engine";$("hudR").textContent="concept";show("s6")}
+  if(j<=2){st.mode=j;modeIntro()}
+  else if(j===3){profile()}
+  else if(j===4){rating()}
+  else {rail(4);$("hudT").textContent="the decision engine";$("hudR").textContent="concept";show("s6")}
 }
 [].forEach.call(document.querySelectorAll(".rr"),function(e){e.onclick=function(){jump(e.dataset.j)}});
 [].forEach.call(document.querySelectorAll("#menu .mi"),function(e){e.onclick=function(){jump(e.dataset.j)}});
@@ -617,7 +672,8 @@ function startMode(){
 }
 function round(){
   var M=MODES[st.mode], s=st.order[st.i];
-  st.locked=false; st.dir=null; st.conf=50; st.lo=-8; st.hi=8; st.phase="dir";
+  st.locked=false; st.dir=null; st.conf=50; st.lo=-8; st.hi=8; st.used=0; st.cost=0;
+  st.phase = M.k==="dec" ? "info" : "dir";
   $("hudT").textContent=M.no+" "+M.ti;
   $("hudR").textContent=(st.i+1)+"/"+M.n+" · "+st.score+" pts";
   $("tk").textContent=s.n; $("dt").textContent=s.dt; $("hd").textContent=s.h;
@@ -625,19 +681,23 @@ function round(){
   $("dif").className="pill "+(s.lv==="HARD"||s.lv==="EXTREME"?"h":s.lv==="EASY"||s.lv==="SMALL"?"e":"g");
   $("cx").textContent=s.c||""; $("cx").style.display=(s.c?"block":"none");
   $("src").textContent=srcTxt(s);
-  $("clues").innerHTML="";
-  if(M.k==="info"&&s.cl){
-    s.cl.forEach(function(c){
-      var d=document.createElement("div"); d.className="clue";
-      d.innerHTML='<span>Reveal: '+c[0]+'</span><span class="cst">−'+c[2]+'</span>';
-      d.onclick=function(){ if(st.locked||d.classList.contains("open"))return;
-        d.classList.add("open"); d.innerHTML='<span>'+c[1]+'</span><span class="cst">−'+c[2]+'</span>';
-        st.score-=c[2]; st.spent+=c[2]; $("hudR").textContent=(st.i+1)+"/"+M.n+" · "+st.score+" pts"; };
-      $("clues").appendChild(d);
+  $("flashes").innerHTML=""; $("fbox").style.display=M.k==="dec"?"block":"none";
+  $("enough").style.display=M.k==="dec"?"block":"none";
+  if(M.k==="dec"&&s.fl){
+    budg();
+    s.fl.forEach(function(c,ix){
+      var d=document.createElement("div"); d.className="flash";
+      d.innerHTML='<span><span class="fn">flash '+("0"+(ix+1))+'</span>'+c[0]+'</span><span class="cst">−'+c[2]+'</span>';
+      d.onclick=function(){ if(st.phase!=="info"||d.classList.contains("open"))return;
+        d.classList.add("open");
+        d.innerHTML='<span><span class="fn">flash '+("0"+(ix+1))+' · paid '+c[2]+'</span>'+c[1]+'</span>';
+        st.used++; st.cost+=c[2]; st.spent+=c[2]; budg(); };
+      $("flashes").appendChild(d);
     });
   }
-  $("ask").textContent = M.k==="rng" ? "Draw where it closes" : M.k==="name" ? "What is this called?" : "Will it close higher or lower?";
-  $("dirs").style.display = (M.k==="rng"||M.k==="name") ? "none" : "grid";
+  $("ask").textContent = M.k==="rng" ? "Draw where it closes" : M.k==="name" ? "What is this called?"
+    : "You do not have enough here to be sure. What do you want to do?";
+  $("dirs").style.display = M.k==="dec" ? "none" : (M.k==="rng"||M.k==="name") ? "none" : "grid";
   $("opts").style.display = M.k==="name" ? "block" : "none";
   if(M.k==="name"){
     $("tk").textContent="SITUATION"; $("dt").textContent="";
@@ -653,13 +713,31 @@ function round(){
   if(M.k==="rng"){$("mrk").classList.remove("on");$("lockR").style.display="block";paint()}
   $("sl").value=50; $("cvp").textContent="50%"; $("cvw").textContent="coin flip";
   $("rev").className="rev"; $("nextb").style.display="none";
+  $("rsp").style.display="none"; $("dql").style.display="none";
+}
+/* research budget line + the commit button label */
+function budg(){
+  var s=st.order[st.i],tot=s.fl?s.fl.length:0,left=tot-st.used;
+  $("bleft").textContent = left===0 ? "you have heard everything there is"
+    : left+(left===1?" more thing":" more things")+" you could find out";
+  $("bspent").innerHTML="spent <b>"+st.cost+"</b>";
+  $("enough").textContent = st.used===0 ? "ENOUGH — MAKE THE CALL"
+    : "ENOUGH — MAKE THE CALL · "+st.used+" flash"+(st.used>1?"es":"")+" · −"+st.cost;
+}
+function commit(){
+  if(st.phase!=="info")return;
+  st.phase="dir";
+  $("enough").style.display="none";
+  $("dirs").style.display="grid";
+  $("ask").textContent="Will it close higher or lower?";
+  [].forEach.call($("flashes").children,function(d){if(!d.classList.contains("open"))d.classList.add("shut")});
 }
 function pick(d){
   var M=MODES[st.mode];
   if(st.phase!=="dir"||st.locked)return;
   st.dir=d;
   [].forEach.call(document.querySelectorAll(".dir"),function(b){b.classList.toggle("sel",b.dataset.d===String(d))});
-  if(M.k==="conv"){st.phase="conf";$("pConv").style.display="block"} else {lockInfo()}
+  st.phase="conf";$("pConv").style.display="block";
 }
 function paint(){
   $("bnd").style.left=pos(st.lo)+"%"; $("bnd").style.width=(pos(st.hi)-pos(st.lo))+"%";
@@ -678,13 +756,38 @@ function mv(v){if(st.drag==="lo"){st.lo=Math.min(v,st.hi-1)}else{st.hi=Math.max(
   st.lo=Math.max(MIN,st.lo);st.hi=Math.min(MAX,st.hi);paint()}
 window.__band=function(a,b){st.lo=a;st.hi=b;paint()};
 
-function lockConv(){
+/* Brier-style proper score for the call, minus what the research cost.
+   50% always returns exactly 50 before research — hedging is mathematically neutral. */
+function dqTier(n){return n>=65?["HIGH","var(--green)"]:n>=25?["SOLID","var(--gold)"]:n>=-10?["THIN","var(--gold)"]:["LOW","var(--red)"]}
+function dqLine(r){
+  var u=r.used,c=r.conf,ok=r.right;
+  if(ok&&u===0&&c>=75) return "You made the call early and correctly — and you backed it. You didn't need the extra information.";
+  if(ok&&u===0)        return "Right on the opening headline alone, but you only claimed "+c+"%. You knew more than you were willing to say.";
+  if(ok&&c>=75)        return "The information earned its cost. You paid "+r.cost+" and you committed harder because of it.";
+  if(ok)               return "You paid "+r.cost+" to find out, then called it at "+c+"%. You bought the confidence and never spent it.";
+  if(!ok&&u===0&&c>=78)return "You committed at "+c+"% on the headline alone. There were "+r.left+" things you could have found out first.";
+  if(!ok&&u>=2&&c>=78) return "You bought more information — but your confidence rose faster than your accuracy did.";
+  if(!ok&&u>=2)        return "You did the work, got it wrong, and hedged. That barely cost you anything, which is the system working.";
+  if(!ok&&c<66)        return "Wrong, cheaply. You hedged on thin information — which is the correct response to thin information.";
+  return "Wrong at "+c+"%, on "+u+" flash"+(u===1?"":"es")+". The thing you skipped was the thing that mattered.";
+}
+function lockDec(){
   if(st.phase!=="conf"||st.locked)return; st.locked=true;
-  var s=st.order[st.i],right=(st.dir===s.up),p=st.conf/100;
-  var pts=Math.round((1-2*Math.pow(p-(right?1:0),2))*100);
-  st.score+=pts; st.recs.conv.push({s:s,right:right,conf:st.conf,pts:pts});
+  var s=st.order[st.i],right=(st.dir===s.up),p=st.conf/100,tot=s.fl?s.fl.length:0;
+  var call=Math.round((1-2*Math.pow(p-(right?1:0),2))*100);
+  var net=call-st.cost;
+  st.score+=net;
+  var rec={s:s,right:right,conf:st.conf,used:st.used,cost:st.cost,call:call,net:net,left:tot-st.used};
+  st.recs.dec.push(rec);
   $("pConv").style.display="none"; $("dirs").style.display="none";
-  rev(right,(s.m>0?"+":"")+s.m+"%",(right?"you called it":"wrong")+" · at "+st.conf+"% conviction",s.w,pts,right?"CALLED IT":"WRONG");
+  var tier=dqTier(net);
+  $("rsp").style.display="grid";
+  $("rsp").innerHTML='<div><small>conviction</small><b>'+st.conf+'%</b></div>'+
+    '<div><small>flashes bought</small><b>'+st.used+'<i style="font-style:normal;font-size:.6em;color:var(--cream)">/'+tot+'</i></b></div>'+
+    '<div><small>decision quality</small><b style="color:'+tier[1]+';font-size:16px">'+tier[0]+'</b></div>';
+  $("dql").style.display="block"; $("dql").textContent=dqLine(rec);
+  rev(right,(s.m>0?"+":"")+s.m+"%",right?"you called it":"wrong",s.w,net,
+    st.cost?((call>0?"+":"")+call+" for the call<br>−"+st.cost+" for the research"):"you paid nothing<br>for information");
 }
 function lockRange(){
   if(st.locked)return; st.locked=true;
@@ -712,22 +815,13 @@ function lockName(chosen,btn){
   });
   rev(right,s.a,right?"you named it":"you said “"+chosen+"”",s.w,pts,right?"CORRECT":"NOT QUITE");
 }
-function lockInfo(){
-  if(st.locked)return; st.locked=true;
-  var s=st.order[st.i],right=(st.dir===s.up);
-  var used=document.querySelectorAll(".clue.open").length;
-  var pts=right?100:-40; st.score+=pts;
-  st.recs.info.push({s:s,right:right,used:used,pts:pts});
-  $("dirs").style.display="none";
-  rev(right,(s.m>0?"+":"")+s.m+"%",(right?"you called it":"wrong")+" · paid for "+used+" of 2 clues",s.w,pts,used?("clues cost "+st.spent):"paid nothing");
-}
 function rev(win,big,sub,why,pts,meta){
   var M=MODES[st.mode],r=$("rev");
   r.className="rev on "+(win?"win":"lose");
   $("r1").textContent=big; if(M.k==="name"){$("r1").style.fontSize="clamp(24px,6.4vw,36px)"}else{$("r1").style.fontSize=""} $("r1").style.color = (M.k==="name") ? (win?"var(--green)":"var(--red)") : (big.indexOf("-")===0?"var(--red)":"var(--green)");
   $("r2").textContent=sub; $("r3").textContent=why;
   $("r4n").textContent=(pts>0?"+":"")+pts; $("r4n").style.color=pts>0?"var(--green)":"var(--red)";
-  $("r4m").textContent=meta;
+  $("r4m").innerHTML=meta;
   $("hudR").textContent=(st.i+1)+"/"+M.n+" · "+st.score+" pts";
   $("nextb").textContent=(st.i===M.n-1)?"SEE WHAT THAT SHOWED →":"NEXT →";
   $("nextb").style.display="block";
@@ -759,31 +853,6 @@ function modeResult(){
       '<div class="verd g"><div class="lbl">your vocabulary</div><div class="t">'+t+'</div><div class="v">'+v+'</div></div>'+
       '<div class="warn">Naming is the bottom rung. It is not the skill — but every skill above it is unusable without it.</div>';
   }
-  else if(M.k==="conv"){
-    var n=R.length,cor=R.filter(function(r){return r.right}).length;
-    var sure=R.filter(function(r){return r.conf>=75}),uns=R.filter(function(r){return r.conf<75});
-    function rt(a){return a.length?Math.round(a.filter(function(r){return r.right}).length/a.length*100):null}
-    var sr=rt(sure),ur=rt(uns);
-    var avg=Math.round(R.reduce(function(a,r){return a+r.conf},0)/n),acc=Math.round(cor/n*100),gap=avg-acc;
-    var mx=Math.max.apply(null,R.map(function(r){return r.conf}));
-    var t,v;
-    if(gap<=-15){t="THE SANDBAGGER";v="Right <b>"+acc+"%</b> and never claimed more than <b>"+mx+"%</b>. Better than you say, and it's costing you points.";}
-    else if(mx<=66){t="THE HEDGER";v="You never went above <b>"+mx+"%</b>. On LinkedIn that reads as measured. Here it caps every round near 50 points whether you're right or wrong.";}
-    else if(sr!==null&&ur!==null&&sr<ur){t="INVERTED";v="Sure: right <b>"+sr+"%</b>. Unsure: right <b>"+ur+"%</b>. Your confidence fires hardest where you're least reliable.";}
-    else if(gap>=18){t="OVERCONFIDENT";v="Conviction <b>"+avg+"%</b>, accuracy <b>"+acc+"%</b>. You're carrying <b>"+gap+" points</b> of belief you haven't earned.";}
-    else{t="CALIBRATED";v="Conviction <b>"+avg+"%</b>, accuracy <b>"+acc+"%</b> — a gap of <b>"+Math.abs(gap)+"</b>. Your confidence means something, which is rare.";}
-    st.convScore=Math.max(0,Math.min(100,100-Math.abs(gap)*2.2));
-    h='<div class="lbl" style="text-align:center">01 · conviction</div><div class="big">'+cor+'<i>/'+n+'</i></div>'+
-      '<div class="lbl" style="text-align:center">right</div>'+
-      '<div class="split"><div class="sp hi"><small>when you were<br>SURE (75%+)</small><b>'+(sr===null?"—":sr+"%")+'</b></div>'+
-      '<div class="sp"><small>when you were<br>UNSURE (&lt;75%)</small><b>'+(ur===null?"—":ur+"%")+'</b></div></div>'+
-      '<div class="strip"><div class="lbl">your calls · bar = how sure you were</div>'+
-      R.map(function(r){return '<div class="srow"><span class="tk">'+r.s.t+'</span><span class="sbar"><i style="left:0;width:'+
-        Math.max(4,Math.round((r.conf-50)/49*100))+'%;background:'+(r.right?"var(--greend)":"var(--red)")+'"></i></span>'+
-        '<span style="width:30px;text-align:right;color:'+(r.right?"var(--green)":"var(--red)")+'">'+r.conf+'%</span></div>'}).join("")+
-      '<div class="note" style="margin-top:8px">long red bars are the expensive ones</div></div>'+
-      '<div class="verd p"><div class="lbl">your conviction type</div><div class="t">'+t+'</div><div class="v">'+v+'</div></div>';
-  }
   else if(M.k==="rng"){
     var hits=R.filter(function(r){return r.inside}).length,nn=R.length;
     var aw=R.reduce(function(a,r){return a+r.w},0)/nn;
@@ -806,37 +875,69 @@ function modeResult(){
       '<div class="verd g"><div class="lbl">your forecast shape</div><div class="t">'+t+'</div><div class="v">'+v+'</div></div>'+
       '<div class="warn"><b>Higher / lower</b> gives you direction. <b>How far</b> gives you direction, magnitude and uncertainty at once — the width of your band <i>is</i> your confidence.</div>';
   } else {
-    var nb=R.filter(function(r){return r.used===0}),pd=R.filter(function(r){return r.used>0});
-    function pc(a){return a.length?Math.round(a.filter(function(r){return r.right}).length/a.length*100):null}
-    var pb=pc(nb),pp=pc(pd),t,v;
-    if(pb===null){t="NEVER GUESSED BLIND";v="You paid on every call, spending <b>"+st.spent+" points</b> to feel ready. No control group, so no way to know if it helped.";}
-    else if(pp===null){t="NEVER PAID";v="You called everything cold. You either trust your read or dislike paying — either way you don't know what you missed.";}
-    else if(pp>pb+10){t="INFORMATION HELPED";v="Blind <b>"+pb+"%</b> → informed <b>"+pp+"%</b>, for <b>"+st.spent+" points</b>.";}
-    else if(pb>pp+10){t="YOU PAID TO GET WORSE";v="Blind <b>"+pb+"%</b> → informed <b>"+pp+"%</b>. You spent <b>"+st.spent+" points</b> on context and got less accurate.";}
-    else{t="IT BOUGHT NOTHING";v="Blind <b>"+pb+"%</b>, informed <b>"+pp+"%</b>. Same place, <b>"+st.spent+" points</b> lighter.";}
-    var used=R.reduce(function(a,r){return a+r.used},0);
-    st.infoScore=Math.max(0,Math.min(100,(R.filter(function(r){return r.right}).length/R.length)*100-used*5));
-    h='<div class="lbl" style="text-align:center">03 · price of information</div><div class="big">'+st.score+'</div>'+
-      '<div class="lbl" style="text-align:center">points · after paying '+st.spent+'</div>'+
-      '<div class="split"><div class="sp hi"><small>called with<br>NO CLUES</small><b>'+(pb===null?"—":pb+"%")+'</b></div>'+
-      '<div class="sp"><small>called after<br>PAYING</small><b>'+(pp===null?"—":pp+"%")+'</b></div></div>'+
-      '<div class="verd p"><div class="lbl">what the information was worth</div><div class="t">'+t+'</div><div class="v">'+v+'</div></div>'+
-      '<div class="warn">Five rounds cannot prove anything about you. This shows the <b>mechanic</b> — at scale, blind versus informed becomes a real signal.</div>';
+    var n=R.length,cor=R.filter(function(r){return r.right}).length;
+    function rt(a){return a.length?Math.round(a.filter(function(r){return r.right}).length/a.length*100):null}
+    /* ── half one: was your confidence earned? ── */
+    var sure=R.filter(function(r){return r.conf>=75}),uns=R.filter(function(r){return r.conf<75});
+    var sr=rt(sure),ur=rt(uns);
+    var avg=Math.round(R.reduce(function(a,r){return a+r.conf},0)/n),acc=Math.round(cor/n*100),gap=avg-acc;
+    var mx=Math.max.apply(null,R.map(function(r){return r.conf}));
+    var ct,cv;
+    if(gap<=-15){ct="THE SANDBAGGER";cv="Right <b>"+acc+"%</b> of the time and never claimed more than <b>"+mx+"%</b>. Better than you say you are, and it costs you points every round.";}
+    else if(mx<=66){ct="THE HEDGER";cv="You never went above <b>"+mx+"%</b>. Out loud that reads as measured. Here it caps every round near 50 whether you were right or wrong.";}
+    else if(sr!==null&&ur!==null&&sr<ur){ct="INVERTED";cv="Sure: right <b>"+sr+"%</b>. Unsure: right <b>"+ur+"%</b>. Your confidence fires hardest exactly where you are least reliable.";}
+    else if(gap>=18){ct="OVERCONFIDENT";cv="Conviction <b>"+avg+"%</b>, accuracy <b>"+acc+"%</b>. You are carrying <b>"+gap+" points</b> of belief you have not earned.";}
+    else{ct="CALIBRATED";cv="Conviction <b>"+avg+"%</b>, accuracy <b>"+acc+"%</b> — a gap of <b>"+Math.abs(gap)+"</b>. Your confidence means something, which is rarer than it sounds.";}
+    /* ── half two: did the information earn its cost? ── */
+    var tot=R.reduce(function(a,r){return a+r.used+r.left},0);
+    var bought=R.reduce(function(a,r){return a+r.used},0);
+    var spent=R.reduce(function(a,r){return a+r.cost},0);
+    var maxSp=spent+R.reduce(function(a,r){return a+(r.left*15)},0);
+    var lite=R.filter(function(r){return r.used<=1}),deep=R.filter(function(r){return r.used>=2});
+    var lr=rt(lite),dr=rt(deep);
+    var it,iv;
+    if(bought===0){it="YOU NEVER LOOKED";iv="Every call made on the headline alone, for <b>0 points</b> of research. Fast and free — but you have no idea what you walked past.";}
+    else if(bought===tot){it="YOU BOUGHT EVERYTHING";iv="All <b>"+tot+"</b> flashes, <b>"+spent+" points</b>. Certainty is available here. It is just never free, and you paid list price every time.";}
+    else if(lr!==null&&dr!==null&&lr>=dr+10){it="YOU RESEARCHED PAST THE ANSWER";iv="Right <b>"+lr+"%</b> on light information, <b>"+dr+"%</b> on heavy. The extra <b>"+spent+" points</b> bought volume, not accuracy.";}
+    else if(lr!==null&&dr!==null&&dr>=lr+10){it="THE INFORMATION PAID";iv="Right <b>"+lr+"%</b> on light information, <b>"+dr+"%</b> when you dug. <b>"+spent+" points</b> well spent — that is what efficiency looks like.";}
+    else{it="ROUGHLY BREAK-EVEN";iv="<b>"+bought+" of "+tot+"</b> flashes for <b>"+spent+" points</b>, and accuracy barely moved. Not wasteful. Not yet efficient either.";}
+    /* conviction score is just the mean proper score per call — the whole point of a proper
+       scoring rule is that it already answers "was that number meaningful". Hedging every
+       round lands on exactly 50. Confident and wrong lands below zero and clamps to 0.      */
+    var meanCall=R.reduce(function(a,r){return a+r.call},0)/n;
+    st.convScore=Math.max(0,Math.min(100,Math.round(meanCall)));
+    st.infoScore=Math.max(0,Math.min(100,Math.round(acc*(1-0.4*(maxSp?spent/maxSp:0)))));
+    st.decScore=Math.round(st.convScore*0.5+st.infoScore*0.5);
+    h='<div class="lbl" style="text-align:center">03 · the decision</div><div class="big">'+cor+'<i>/'+n+'</i></div>'+
+      '<div class="lbl" style="text-align:center">called correctly · '+st.score+' pts after '+spent+' spent on research</div>'+
+      '<div class="strip"><div class="lbl">every decision · bar = conviction · dots = flashes bought</div>'+
+      R.map(function(r){return '<div class="srow"><span class="tk">'+r.s.t+'</span><span class="sbar"><i style="left:0;width:'+
+        Math.max(4,Math.round((r.conf-50)/49*100))+'%;background:'+(r.right?"var(--greend)":"var(--red)")+'"></i></span>'+
+        '<span style="width:34px;text-align:center;color:var(--purple);letter-spacing:1px">'+
+        (new Array(r.used+1).join("●")+new Array(r.left+1).join("○"))+'</span>'+
+        '<span style="width:34px;text-align:right;color:'+(r.net>0?"var(--green)":"var(--red)")+'">'+(r.net>0?"+":"")+r.net+'</span></div>'}).join("")+
+      '<div class="note" style="margin-top:8px">long red bars are the expensive ones. so are long rows of filled dots.</div></div>'+
+      '<div class="split"><div class="sp hi"><small>right when you<br>SAID YOU WERE SURE</small><b>'+(sr===null?"—":sr+"%")+'</b></div>'+
+      '<div class="sp"><small>right when you<br>SAID YOU WEREN\'T</small><b>'+(ur===null?"—":ur+"%")+'</b></div></div>'+
+      '<div class="verd p"><div class="lbl">half one · was your confidence earned</div><div class="t">'+ct+'</div><div class="v">'+cv+'</div></div>'+
+      '<div class="split"><div class="sp"><small>right on<br>0–1 FLASHES</small><b>'+(lr===null?"—":lr+"%")+'</b></div>'+
+      '<div class="sp hi"><small>right on<br>2–3 FLASHES</small><b>'+(dr===null?"—":dr+"%")+'</b></div></div>'+
+      '<div class="verd g"><div class="lbl">half two · did the information earn its cost</div><div class="t">'+it+'</div><div class="v">'+iv+'</div></div>'+
+      '<div class="warn"><b>One game, three skills.</b> Direction is whether you were right. Conviction is whether the number you attached to it meant anything. Information efficiency is whether you knew when to stop. Five rounds proves nothing about you statistically — it shows what would be measurable at scale.</div>';
   }
-  h+='<button class="btn cta gold" id="mnext" style="margin-top:14px">'+(st.mode<3?"NEXT EXPERIMENT →":"SEE YOUR PROFILE →")+'</button>'+
+  h+='<button class="btn cta gold" id="mnext" style="margin-top:14px">'+(st.mode<2?"NEXT EXPERIMENT →":"SEE YOUR PROFILE →")+'</button>'+
      '<div class="navrow"><button class="btn ghost" id="rReplay">Replay this mode</button></div>';
   $("mres").innerHTML=h; rail(st.mode); show("s3");
-  $("mnext").onclick=function(){if(st.mode<3){st.mode++;modeIntro()}else{profile()}};
+  $("mnext").onclick=function(){if(st.mode<2){st.mode++;modeIntro()}else{profile()}};
   $("rReplay").onclick=startMode;
 }
 
 var AX=[["Recognition","nameScore","can you name the situation you are looking at"],
-        ["Conviction","convScore","how well your confidence matches your accuracy"],
-        ["Magnitude","rngScore","how well you size the move, not just its direction"],
-        ["Information","infoScore","how much you need to know before you commit"]];
+        ["Magnitude","rngScore","can you size the move, not just its direction"],
+        ["Decision Quality","decScore","do you know when you know enough — and is your confidence worth anything"]];
 function profile(){
-  rail(4); $("hudT").textContent="decision profile";
-  var done=st.done.filter(Boolean).length; $("hudR").textContent=done+" of 4 played";
+  rail(3); $("hudT").textContent="decision profile";
+  var done=st.done.filter(Boolean).length; $("hudR").textContent=done+" of 3 played";
   $("axes").innerHTML=AX.map(function(a){
     var has=st[a[1]]!==undefined, v=Math.round(st[a[1]]||0);
     return '<div class="axrow"><div class="axtop"><span>'+a[0]+'</span><b style="color:'+
@@ -844,22 +945,46 @@ function profile(){
       '<div class="axbar"><i data-w="'+(has?v:0)+'" style="background:'+(v>=70?"var(--greend)":v>=45?"var(--gold)":"var(--red)")+'"></i></div>'+
       '<div class="axnote">'+(has?a[2]:"not played yet")+'</div></div>'}).join("");
   setTimeout(function(){[].forEach.call(document.querySelectorAll(".axbar i"),function(b){b.style.width=b.dataset.w+"%"})},120);
+  /* decision quality is one number made of two — show the seam. this is the game ≠ skill point. */
+  $("sub").innerHTML = (st.decScore===undefined) ? "" :
+    '<div class="split" style="margin-top:11px"><div class="sp"><small>inside decision quality<br>CONVICTION</small><b>'+
+    Math.round(st.convScore)+'</b></div><div class="sp hi"><small>inside decision quality<br>INFORMATION EFFICIENCY</small><b>'+
+    Math.round(st.infoScore)+'</b></div></div>'+
+    '<div class="note" style="text-align:left">Conviction is your average proper score per call — hedging every round lands on exactly 50. Information efficiency is accuracy discounted by what you paid to reach it. <b style="color:var(--cream)">One game produced both, plus whether the direction was right. A game is not a skill.</b></div>';
   var got=AX.filter(function(a){return st[a[1]]!==undefined})
             .map(function(a){return {n:a[0],v:Math.round(st[a[1]])}}).sort(function(x,y){return y.v-x.v});
-  $("pv").innerHTML = got.length<2
-    ? "Play all four experiments and this becomes a shape rather than a score."
-    : "Strongest: <b>"+got[0].n+"</b> at "+got[0].v+". Weakest: <b>"+got[got.length-1].n+"</b> at "+got[got.length-1].v+
-      ". Four numbers describing how you decide — none of which OpenTrade currently records.";
+  var read;
+  if(got.length===0){read="Nothing played yet. Run an experiment and this becomes a shape rather than an empty scaffold."}
+  else if(got.length===1){read="One number so far — <b>"+got[0].n+"</b> at "+got[0].v+". Play the other two and it starts describing how you decide rather than how you did once."}
+  else{
+    var top=got[0],bot=got[got.length-1],spread=top.v-bot.v;
+    read="Strongest: <b>"+top.n+"</b> at "+top.v+". Weakest: <b>"+bot.n+"</b> at "+bot.v+". ";
+    if(spread<12){read+="Almost flat — no obvious hole, which usually means the next thing to do is play more rounds rather than a different game."}
+    else if(bot.n==="Decision Quality"){
+      read+= (st.convScore<st.infoScore)
+        ? "And inside that, the weaker half is <b>conviction</b>: you read situations better than you size your own certainty about them."
+        : "And inside that, the weaker half is <b>information efficiency</b>: you get there, but you pay more than you need to on the way.";
+    }
+    else if(bot.n==="Recognition"){read+="You can decide well about situations you can't yet name — which works until the name is the thing that would have told you what to do."}
+    else{read+="You call direction better than you size it. Higher-or-lower flatters that; a range would not."}
+  }
+  $("pv").innerHTML=read+(got.length>1?" <span style=\"color:var(--mut)\">None of these are things OpenTrade currently records.</span>":"");
   show("s4");
 }
 function rating(){
-  rail(5); $("hudT").textContent="the rating idea"; $("hudR").textContent="concept";
+  rail(4); $("hudT").textContent="the rating idea"; $("hudR").textContent="concept";
   $("grps").innerHTML=GRP.map(function(g){
-    return '<div class="grp"><div class="sk">'+g[0]+'</div><div class="gl">'+g[1]+'</div></div>'}).join("");
-  $("ladder").innerHTML=LADDER.map(function(l){
-    return '<div class="lad'+(l[1]==="built"?" built":"")+'"><div class="lt"><span class="ln">'+l[0]+
-      '</span><span class="ls">'+(l[1]==="built"?"playable here":"would need building")+'</span></div>'+
-      '<div class="ld">'+l[2]+'</div></div>'}).join("");
+    return '<div class="grp'+(g[2]?"":" none")+'"><div class="sk">'+g[0]+'</div><div class="gl">'+g[1]+'</div>'+
+      '<div class="gf">measured by <b>'+(g[2]||"nothing here yet")+'</b></div></div>'}).join("");
+  $("arch").innerHTML=ARCH.map(function(a){
+    return '<div class="ablk"><div class="ag">'+a[0]+'</div>'+
+      '<div class="aa" style="font-family:var(--sans);font-size:11.5px;color:var(--mut);line-height:1.45">'+a[1]+'</div>'+
+      '<div class="aa">↓</div>'+
+      '<div class="achips">'+a[2].map(function(s){return '<span class="achip">'+s+'</span>'}).join("")+'</div>'+
+      '<div class="aa">↓</div>'+
+      '<div class="achips">'+a[2].map(function(s){return '<span class="achip r">'+s+' rating</span>'}).join("")+'</div>'+
+      '</div>'}).join("")+
+    '<div class="aconv">↓ ↓ ↓</div>';
   show("s5");
 }
 
@@ -867,14 +992,15 @@ function rating(){
 $("go").onclick=function(){st.mode=0;modeIntro()};
 $("mgo").onclick=startMode;
 $("mBack").onclick=function(){if(st.mode>0){st.mode--;modeIntro()}else{show("s0");rail(-1)}};
-$("mSkip").onclick=function(){if(st.mode<3){st.mode++;modeIntro()}else{profile()}};
+$("mSkip").onclick=function(){if(st.mode<2){st.mode++;modeIntro()}else{profile()}};
 $("nextb").onclick=next;
-$("lockC").onclick=lockConv;
+$("enough").onclick=commit;
+$("lockC").onclick=lockDec;
 $("lockR").onclick=lockRange;
 $("toRate").onclick=rating;
-$("pBack").onclick=function(){st.mode=3;modeIntro()};
+$("pBack").onclick=function(){st.mode=2;modeIntro()};
 $("rBack").onclick=profile;
-$("toEnd").onclick=function(){rail(5);$("hudT").textContent="the decision engine";$("hudR").textContent="concept";show("s6")};
+$("toEnd").onclick=function(){rail(4);$("hudT").textContent="the decision engine";$("hudR").textContent="concept";show("s6")};
 $("eBack").onclick=rating;
 $("again").onclick=function(){fresh();rail(-1);show("s0")};
 [].forEach.call(document.querySelectorAll(".dir"),function(b){b.onclick=function(){pick(Number(b.dataset.d))}});
@@ -885,12 +1011,14 @@ document.addEventListener("keydown",function(e){
   if($("s1").classList.contains("on")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();startMode();return}
   if(!$("s2").classList.contains("on"))return;
   if(st.locked){if(e.key==="Enter"||e.key===" "){e.preventDefault();next()}return}
+  if(st.phase==="info"&&(e.key==="Enter"||e.key===" ")){e.preventDefault();commit();return}
   if(st.phase==="dir"){if(e.key==="ArrowDown"||e.key==="1")pick(0);if(e.key==="ArrowUp"||e.key==="2")pick(1)}
-  else if(st.phase==="conf"&&e.key==="Enter"){e.preventDefault();lockConv()}
+  else if(st.phase==="conf"&&e.key==="Enter"){e.preventDefault();lockDec()}
 });
 (function(){var q=location.search;
-  if(q.indexOf("rec=rate")>=0){st.nameScore=83;st.convScore=64;st.rngScore=38;st.infoScore=71;st.done=[1,1,1,1];rating()}
-  else if(q.indexOf("rec=profile")>=0){st.nameScore=83;st.convScore=64;st.rngScore=38;st.infoScore=71;st.done=[1,1,1,1];profile()}})();
+  function seed(){st.nameScore=83;st.rngScore=38;st.convScore=64;st.infoScore=58;st.decScore=61;st.done=[1,1,1]}
+  if(q.indexOf("rec=rate")>=0){seed();rating()}
+  else if(q.indexOf("rec=profile")>=0){seed();profile()}})();
 paint();
 })();
 </script>
