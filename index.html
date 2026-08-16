@@ -164,8 +164,17 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
 .clue .cst{font-family:var(--mono);font-size:9px;color:var(--purple);white-space:nowrap}
 
 .rev{display:none;margin-top:9px;border-radius:18px;padding:15px 14px}
-.rev.on{display:block;animation:rise .3s cubic-bezier(.2,.8,.3,1) both}
-@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.rev.on{display:block;animation:rise .52s cubic-bezier(.24,1.36,.44,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px) scale(.965)}to{opacity:1;transform:none}}
+.rev.on>*{animation:up .5s cubic-bezier(.28,1.3,.44,1) both}
+.rev.on>*:nth-child(1){animation-delay:.10s}
+.rev.on>*:nth-child(2){animation-delay:.17s}
+.rev.on>*:nth-child(3){animation-delay:.24s}
+.rev.on>*:nth-child(4){animation-delay:.31s}
+.rev.on>*:nth-child(5){animation-delay:.38s}
+.rev.on>*:nth-child(6){animation-delay:.45s}
+@keyframes pop{from{opacity:0;transform:scale(.72)}60%{opacity:1}to{opacity:1;transform:none}}
+.rev.on .r1{animation:pop .55s cubic-bezier(.22,1.5,.4,1) .08s both}
 .rev.win{background:linear-gradient(160deg,rgba(62,155,96,.26),var(--card));border:1px solid var(--green)}
 .rev.lose{background:linear-gradient(160deg,rgba(219,85,77,.22),var(--card));border:1px solid var(--red)}
 .r1{font-family:var(--disp);font-size:clamp(28px,7.4vw,42px);line-height:1}
@@ -273,6 +282,97 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
 .crit{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
 .crit span{border:1px solid var(--line);border-radius:6px;padding:5px 8px;font-family:var(--mono);
   font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+
+/* ── the idea, as a deck ── */
+#s5{padding:6px 13px 13px}
+.deck{width:100%;max-width:520px;height:100%;display:flex;flex-direction:column}
+#dots{display:flex;gap:4px;padding:1px 1px 9px;align-items:center}
+#dots i{flex:1;height:3px;border-radius:2px;background:var(--line);position:relative;overflow:hidden;
+  transition:height .3s cubic-bezier(.3,1.4,.5,1)}
+#dots i::after{content:"";position:absolute;inset:0;background:var(--gold);border-radius:2px;
+  transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.16,.86,.24,1)}
+#dots i.on::after{transform:scaleX(1)}
+#dots i.cur{height:5px}
+.dstage{flex:1 1 auto;position:relative;min-height:0;perspective:1100px;overflow:hidden}
+.sl{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;opacity:0;pointer-events:none;
+  transition:opacity .19s linear;will-change:transform,opacity}
+.sl::-webkit-scrollbar{display:none}
+.sl.on{opacity:1;transition:none}
+/* scoped to the active screen — an inactive .scr must stay click-through */
+.scr.on .sl.on{pointer-events:auto}
+.slin{min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:4px 0}
+
+/* the slide itself travels in from the side it came from */
+@keyframes inR{from{opacity:.2;transform:translate3d(46px,0,0) scale(.955) rotateY(-5deg)}
+               to{opacity:1;transform:none}}
+@keyframes inL{from{opacity:.2;transform:translate3d(-46px,0,0) scale(.955) rotateY(5deg)}
+               to{opacity:1;transform:none}}
+.sl.on.n1{animation:inR .44s cubic-bezier(.16,.86,.24,1) both}
+.sl.on.n2{animation:inL .44s cubic-bezier(.16,.86,.24,1) both}
+
+/* then the contents spring up behind it, one at a time */
+@keyframes up{from{opacity:0;transform:translate3d(0,20px,0) scale(.97)}
+              to{opacity:1;transform:none}}
+.sl.on .slin>*{animation:up .58s cubic-bezier(.28,1.35,.44,1) both}
+.sl.on .slin>*:nth-child(1){animation-delay:.06s}
+.sl.on .slin>*:nth-child(2){animation-delay:.13s}
+.sl.on .slin>*:nth-child(3){animation-delay:.20s}
+.sl.on .slin>*:nth-child(4){animation-delay:.27s}
+.sl.on .slin>*:nth-child(5){animation-delay:.34s}
+.sl.on .slin>*:nth-child(6){animation-delay:.41s}
+.sl.on .slin>*:nth-child(7){animation-delay:.48s}
+.sl.on .slin>*:nth-child(8){animation-delay:.55s}
+/* display type gets its own arrival — letterspacing settles as it lands */
+@keyframes hd{from{opacity:0;transform:translate3d(0,24px,0);letter-spacing:.19em;filter:blur(5px)}
+              to{opacity:1;transform:none;letter-spacing:.01em;filter:none}}
+.sl.on .big2{animation:hd .7s cubic-bezier(.18,1,.3,1) .12s both}
+.sl:not(.on) .stg{opacity:0}
+.sl.on .stg{animation:up .5s cubic-bezier(.28,1.45,.44,1) both}
+.sl.on .stg:nth-child(1){animation-delay:.30s}
+.sl.on .stg:nth-child(2){animation-delay:.40s}
+.sl.on .stg:nth-child(3){animation-delay:.50s}
+.sl.on .stg:nth-child(4){animation-delay:.60s}
+.sl.on .stg:nth-child(5){animation-delay:.70s}
+.sl.on .stg:nth-child(6){animation-delay:.80s}
+.sl.on .stg:nth-child(7){animation-delay:.90s}
+.dctl{display:flex;gap:8px;align-items:center;padding-top:11px}
+#dCount{font-family:var(--mono);font-size:9px;letter-spacing:.13em;color:var(--dim);white-space:nowrap;
+  display:inline-block}
+@keyframes bump{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-4px) scale(1.14);color:var(--gold)}
+  100%{transform:none;scale:1}}
+#dCount.bmp{animation:bump .42s cubic-bezier(.3,1.4,.5,1) both}
+#dNext,#dPrev{transition:transform .12s cubic-bezier(.3,1.4,.5,1),filter .15s}
+#dNext:active{transform:translateY(2px) scale(.975)}
+#dPrev{flex:0 0 auto;padding:13px 13px;font-size:12px}
+#dNext{flex:1 1 auto;padding:14px;font-size:15px}
+.dkick{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.big2{font-family:var(--disp);text-transform:uppercase;font-size:clamp(29px,8.2vw,50px);line-height:1.02;
+  letter-spacing:.01em;text-wrap:balance;margin-top:9px}
+.big2 em{font-style:normal;color:var(--gold)}
+.big2 s{text-decoration:none;color:var(--mut)}
+.dp{margin-top:11px;font-size:14px;line-height:1.6;color:var(--cream)}
+.dp b{color:var(--paper)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.vsc{border:1px solid var(--line);border-radius:14px;padding:12px 11px;background:var(--card)}
+.vsc.hi{border-color:var(--gold);background:linear-gradient(158deg,rgba(185,165,111,.13),var(--card))}
+.vsc small{font-family:var(--mono);font-size:7px;letter-spacing:.11em;text-transform:uppercase;color:var(--mut);display:block}
+.vsc b{display:block;font-family:var(--disp);text-transform:uppercase;font-size:15px;margin-top:6px;line-height:1.12}
+.vsc.hi b{color:var(--gold)}
+.vsc p{margin-top:6px;font-size:11.5px;color:var(--cream);line-height:1.45}
+.arow{display:flex;gap:9px;align-items:center;margin-top:8px}
+.agame{flex:0 0 82px;width:82px;text-align:right;font-family:var(--disp);text-transform:uppercase;
+  font-size:13.5px;line-height:1.05;letter-spacing:.03em}
+.aarr{color:var(--dim);font-family:var(--mono);font-size:12px}
+.grp.sm{margin-top:7px;padding:10px 11px}
+.grp.sm .sk{font-size:13.5px}
+.grp.sm .gl{font-size:10px;margin-top:3px}
+.grp.sm .gf{font-size:7px;margin-top:5px}
+.iqbox.sm{padding:22px 15px;margin-top:12px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0!important;
+    transition-duration:.001ms!important}
+}
 </style>
 </head>
 <body class="pre">
@@ -382,74 +482,105 @@ input[type=range]::-moz-range-thumb{width:23px;height:23px;border-radius:50%;bac
   <div class="navrow"><button class="btn ghost" id="pBack">← Back</button></div>
 </div></div></section>
 
-<section class="scr" id="s5"><div class="sc"><div class="col">
-  <span class="pill g">an idea · not a current opentrade feature</span>
-  <div class="h2" style="margin-top:11px">A score you can't train is just a <em>scoreboard.</em></div>
-  <p class="p">Those three numbers describe how I decide. XP, streak and coins describe how often I turn up. Only one of those is worth getting better at.</p>
-  <p class="p">So here's the idea, in three steps.</p>
+<section class="scr" id="s5">
+ <div class="deck">
+  <div id="dots"></div>
+  <div class="dstage">
 
-  <div class="sec">
-    <div class="lbl">step one</div>
-    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">A game is not a skill</div>
-    <p class="p">This is the part that usually gets collapsed. One game does not equal one rating. A well-built game can measure <b>several</b> abilities at once — the third experiment you just played measures three of them in a single round.</p>
-    <p class="p">Separate the two layers and the whole thing becomes comparable, and far more useful, <b>trainable</b>.</p>
-    <div id="grps"></div>
+   <div class="sl on"><div class="slin">
+     <span class="pill g">an idea · not a current opentrade feature</span>
+     <div class="big2">A score you can't train is just a <em>scoreboard.</em></div>
+     <p class="dp">Those three numbers describe how I decide. XP, streak and coins describe how often I turn up.</p>
+     <div class="vs">
+       <div class="vsc"><small>counted today</small><b>Attendance</b><p>Streak, coins, XP, position on twenty-one different boards. All of it goes up if you just keep opening the app.</p></div>
+       <div class="vsc hi"><small>could be counted</small><b>Decision quality</b><p>Whether the way you think about a market situation is getting better. Nothing currently measures this.</p></div>
+     </div>
+     <p class="dp">Only one of those is worth getting better at. So here's the idea.</p>
+   </div></div>
+
+   <div class="sl"><div class="slin">
+     <div class="dkick">step one</div>
+     <div class="big2">A game is not a <em>skill.</em></div>
+     <p class="dp">This is the part that usually gets collapsed. One game does not equal one rating. A well-built game measures <b>several</b> abilities at once.</p>
+     <div class="ablk" style="margin-top:16px">
+       <div class="ag">The Decision</div>
+       <div class="aa" style="font-family:var(--sans);font-size:11.5px;color:var(--mut);line-height:1.45;padding:5px 0 0">measured three things about you in a single round</div>
+       <div class="aa">↓</div>
+       <div class="achips">
+         <span class="achip stg">Direction</span>
+         <span class="achip stg">Conviction</span>
+         <span class="achip stg">Information Efficiency</span>
+       </div>
+     </div>
+     <p class="dp">Separate the two layers — the thing you play, and the thing it measures — and scores across different games finally become comparable. And far more useful: <b>trainable</b>.</p>
+   </div></div>
+
+   <div class="sl"><div class="slin">
+     <div class="dkick">step one · continued</div>
+     <div class="big2" style="font-size:clamp(24px,6.6vw,38px)">Six abilities, <em>named.</em></div>
+     <p class="dp" style="font-size:12.5px">Three experiments produced five of these. The sixth is here because naming the gap is part of the point.</p>
+     <div id="grps"></div>
+   </div></div>
+
+   <div class="sl"><div class="slin">
+     <div class="dkick">step two</div>
+     <div class="big2" style="font-size:clamp(24px,6.6vw,38px)">Game → skill → <em>rating.</em></div>
+     <p class="dp" style="font-size:12.5px">Every round updates only the skills that round actually tested.</p>
+     <div id="arch" class="arch"></div>
+     <div class="aconv">↓&nbsp;&nbsp;↓&nbsp;&nbsp;↓</div>
+     <div class="fnode" style="text-align:center">every skill carries its own rating</div>
+   </div></div>
+
+   <div class="sl"><div class="slin">
+     <div class="dkick">step two · continued</div>
+     <div class="big2" style="font-size:clamp(24px,6.6vw,38px)">Then <em>one number.</em></div>
+     <div class="iqbox sm">
+       <div class="lbl">market iq</div>
+       <div id="iq">0</div>
+       <div class="iqrd">illustrative figure · not a real rating</div>
+     </div>
+     <p class="dp">The skill ratings roll up into a single figure, weighted by how much each one has actually been measured — so a skill tested over two hundred rounds counts for more than one tested over three.</p>
+   </div></div>
+
+   <div class="sl"><div class="slin">
+     <div class="dkick">step three · the part that matters</div>
+     <div class="big2" style="font-size:clamp(24px,6.6vw,38px)">Then send people <em>somewhere.</em></div>
+     <p class="dp" style="font-size:12.5px">A rating on its own just tells you that you're bad at something. It doesn't give you anywhere to go. <b>That's the gap.</b></p>
+     <div class="flow" style="margin-top:10px">
+       <div class="fnode stg">you play</div><div class="farr">↓</div>
+       <div class="fnode hl stg">the skills that round tested move</div><div class="farr">↓</div>
+       <div class="fnode iqn stg">market iq</div><div class="farr">↓</div>
+       <div class="fnode hl stg">your weakest skill</div><div class="farr">↓</div>
+       <div class="fnode stg">the game built to train it</div>
+     </div>
+     <p class="note">Scoreboard versus curriculum. XP tells you that you played. This tells you that you improved — and hands you the next thing to open.</p>
+   </div></div>
+
+   <div class="sl"><div class="slin">
+     <div class="lbl">future concept · not built · not proposed as existing</div>
+     <div class="big2" style="color:var(--purple)">Market <em style="color:var(--purple)">Room</em></div>
+     <p class="dp" style="font-size:12.5px">Ten players, the same scenario, the same small pot of virtual capital. Then information starts arriving, in flashes, on a clock.</p>
+     <div style="margin-top:10px">
+       <div class="fl stg"><span class="fi">flash 01</span><span>The company announces something.</span></div>
+       <div class="fl stg"><span class="fi">flash 02</span><span>Analysts react — and disagree with each other.</span></div>
+       <div class="fl stg"><span class="fi">flash 03</span><span>The price starts moving before you've decided.</span></div>
+       <div class="fl stg"><span class="fi">flash 04</span><span>A second number lands that complicates the first.</span></div>
+       <div class="fl stg"><span class="fi">flash 05</span><span>Something nobody modelled.</span></div>
+     </div>
+     <p class="dp" style="font-size:12.5px">Enter or wait. How much to commit. Hold or cut. Whether the newest flash actually changes the thesis or just feels like it does.</p>
+     <p class="dp" style="font-size:12.5px">And the winner is <b>not</b> whoever made the most money — one lucky maximum-size bet is not a good decision. It could score the thing that actually transfers:</p>
+     <div class="crit"><span>return</span><span>risk taken</span><span>timing</span><span>conviction</span><span>response to new information</span><span>decision quality</span></div>
+     <p class="note" style="text-align:left">It doesn't exist — not in this prototype, not anywhere. It's just the direction all of this points.</p>
+   </div></div>
+
   </div>
-
-  <div class="sec">
-    <div class="lbl">step two</div>
-    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Game → skill → rating → one number</div>
-    <p class="p">Every round you play updates the skills that round actually tested. Those skill ratings roll up into a single figure — weighted by how confident the system is in each one, so a skill measured over 200 rounds counts for more than one measured over three.</p>
-    <div class="arch" id="arch"></div>
-    <div class="iqbox">
-      <div class="lbl">market iq</div>
-      <div id="iq">1,264</div>
-      <div> ----- </div>
-      <div class="iqrd">illustrative figure · not a real rating</div>
-    </div>
+  <div class="dctl">
+    <button class="btn ghost" id="dPrev">← back</button>
+    <span id="dCount">01 / 07</span>
+    <button class="btn cta gold" id="dNext">NEXT →</button>
   </div>
-
-  <div class="sec">
-    <div class="lbl">step three · the part that matters</div>
-    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Then send people somewhere</div>
-    <p class="p">A rating on its own just tells you that you're bad at something. It doesn't give you anywhere to go. <b>That's the gap.</b></p>
-    <p class="p">Once a skill is named and measured, a game can be built to train that one thing — and the loop closes into somewhere you actually improve:</p>
-    <div class="flow">
-      <div class="fnode">you play</div><div class="farr">↓</div>
-      <div class="fnode hl">the skills that round tested move</div><div class="farr">↓</div>
-      <div class="fnode iqn">market iq</div><div class="farr">↓</div>
-      <div class="fnode hl">your weakest skill</div><div class="farr">↓</div>
-      <div class="fnode">the game built to train it</div><div class="farr">↓</div>
-      <div class="fnode">play that one</div>
-    </div>
-    <p class="note">That's the difference between a scoreboard and a curriculum. XP tells you that you played. This tells you that you improved — and hands you the next thing to open.</p>
-  </div>
-
-  <div class="sec">
-    <div class="lbl">and then · a glimpse</div>
-    <div class="h2" style="font-size:clamp(18px,4.8vw,26px);margin-top:5px">Where this could eventually go</div>
-    <p class="p">The three experiments are single decisions. Real markets are a stream of them — information keeps arriving and you keep having to respond. That's the version worth eventually building.</p>
-    <div class="room">
-      <div class="lbl">future concept · not built · not proposed as existing</div>
-      <div class="rt" style="margin-top:6px">Market Room</div>
-      <p class="p" style="margin-top:8px">Ten players enter the same scenario with the same small pot of virtual capital. Then information starts arriving, in flashes, on a clock.</p>
-      <div style="margin-top:11px">
-        <div class="fl"><span class="fi">flash 01</span><span>The company announces something.</span></div>
-        <div class="fl"><span class="fi">flash 02</span><span>Analysts react — and disagree with each other.</span></div>
-        <div class="fl"><span class="fi">flash 03</span><span>The price starts moving before you've decided.</span></div>
-        <div class="fl"><span class="fi">flash 04</span><span>A second number lands that complicates the first.</span></div>
-        <div class="fl"><span class="fi">flash 05</span><span>Something nobody modelled.</span></div>
-      </div>
-      <p class="p" style="margin-top:11px">Throughout, everyone is deciding the same things in real time: enter or wait, how much to commit, hold or cut, and whether the newest flash actually changes the thesis or just feels like it does.</p>
-      <p class="p">And at the end, the winner is <b>not</b> whoever happened to make the most money. One lucky maximum-size bet is not a good decision. It could score the thing that actually transfers:</p>
-      <div class="crit"><span>return</span><span>risk taken</span><span>timing</span><span>conviction</span><span>response to new information</span><span>decision quality</span></div>
-      <p class="note" style="text-align:left;margin-top:11px">A compressed live-market decision tournament. Same information, same clock, everyone graded on how they handled it. It doesn't exist — in this prototype or anywhere else. It's just the direction all of this points.</p>
-    </div>
-  </div>
-
-  <button class="btn cta gold" id="toEnd" style="margin-top:16px">FINISH →</button>
-  <div class="navrow"><button class="btn ghost" id="rBack">← Back</button></div>
-</div></div></section>
+ </div>
+</section>
 
 <section class="scr" id="s6"><div class="sc"><div class="col" style="text-align:center">
   <div class="h2" style="font-size:clamp(22px,6vw,38px)">OpenTrade doesn't have to just tell you <em>whether you were right.</em></div>
@@ -973,21 +1104,51 @@ function profile(){
   show("s4");
 }
 function rating(){
-  rail(4); $("hudT").textContent="the rating idea"; $("hudR").textContent="concept";
+  rail(4); $("hudT").textContent="the idea";
   $("grps").innerHTML=GRP.map(function(g){
-    return '<div class="grp'+(g[2]?"":" none")+'"><div class="sk">'+g[0]+'</div><div class="gl">'+g[1]+'</div>'+
+    return '<div class="grp sm stg'+(g[2]?"":" none")+'"><div class="sk">'+g[0]+'</div><div class="gl">'+g[1]+'</div>'+
       '<div class="gf">measured by <b>'+(g[2]||"nothing here yet")+'</b></div></div>'}).join("");
   $("arch").innerHTML=ARCH.map(function(a){
-    return '<div class="ablk"><div class="ag">'+a[0]+'</div>'+
-      '<div class="aa" style="font-family:var(--sans);font-size:11.5px;color:var(--mut);line-height:1.45">'+a[1]+'</div>'+
-      '<div class="aa">↓</div>'+
-      '<div class="achips">'+a[2].map(function(s){return '<span class="achip">'+s+'</span>'}).join("")+'</div>'+
-      '<div class="aa">↓</div>'+
-      '<div class="achips">'+a[2].map(function(s){return '<span class="achip r">'+s+' rating</span>'}).join("")+'</div>'+
-      '</div>'}).join("")+
-    '<div class="aconv">↓ ↓ ↓</div>';
-  show("s5");
+    return '<div class="arow stg"><span class="agame">'+a[0]+'</span><span class="aarr">→</span>'+
+      '<span class="achips" style="justify-content:flex-start;flex:1">'+
+      a[2].map(function(s){return '<span class="achip">'+s+'</span>'}).join("")+'</span></div>'}).join("");
+  show("s5"); deck(0,1);
 }
+
+/* ── the idea, as a deck ── */
+var DK=0,DN=0;
+function deck(n,dir){
+  var sl=document.querySelectorAll("#s5 .sl"); DN=sl.length;
+  if(!$("dots").children.length){
+    for(var k=0;k<DN;k++){$("dots").appendChild(document.createElement("i"))}
+  }
+  n=Math.max(0,Math.min(DN-1,n));
+  if(dir===undefined)dir=(n>=DK?1:-1);
+  DK=n;
+  /* strip .on off everything first, then re-add it to the target after a forced
+     reflow — that's what restarts the entrance animations on every navigation */
+  [].forEach.call(sl,function(e){e.classList.remove("on","n1","n2")});
+  var t=sl[n]; void t.offsetWidth;
+  t.classList.add("on"); t.classList.add(dir<0?"n2":"n1"); t.scrollTop=0;
+  [].forEach.call($("dots").children,function(e,i){
+    e.classList.toggle("on",i<=n); e.classList.toggle("cur",i===n)});
+  $("dCount").classList.remove("bmp"); void $("dCount").offsetWidth; $("dCount").classList.add("bmp");
+  $("dCount").textContent=("0"+(n+1)).slice(-2)+" / "+("0"+DN).slice(-2);
+  $("dPrev").textContent = n===0 ? "← profile" : "← back";
+  $("dNext").textContent = n===DN-1 ? "FINISH →" : "NEXT →";
+  $("hudR").textContent="idea "+(n+1)+" of "+DN;
+  if(n===4)countIQ();
+}
+function countIQ(){
+  var el=$("iq"),to=1264,t0=null;
+  function step(ts){ if(t0===null)t0=ts;
+    var p=Math.min(1,(ts-t0)/850), e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(to*e).toLocaleString("en-US");
+    if(p<1)requestAnimationFrame(step) }
+  el.textContent="0"; setTimeout(function(){requestAnimationFrame(step)},260);
+}
+function dNext(){ if(DK>=DN-1){rail(4);$("hudT").textContent="the decision engine";$("hudR").textContent="concept";show("s6")} else deck(DK+1,1) }
+function dPrev(){ if(DK<=0)profile(); else deck(DK-1,-1) }
 
 /* wiring */
 $("go").onclick=function(){st.mode=0;modeIntro()};
@@ -1000,14 +1161,26 @@ $("lockC").onclick=lockDec;
 $("lockR").onclick=lockRange;
 $("toRate").onclick=rating;
 $("pBack").onclick=function(){st.mode=2;modeIntro()};
-$("rBack").onclick=profile;
-$("toEnd").onclick=function(){rail(4);$("hudT").textContent="the decision engine";$("hudR").textContent="concept";show("s6")};
+$("dNext").onclick=dNext;
+$("dPrev").onclick=dPrev;
+/* swipe the deck */
+(function(){var x0=null,y0=null,st5=$("s5").querySelector(".dstage");
+  st5.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY});
+  st5.addEventListener("pointerup",function(e){
+    if(x0===null)return; var dx=e.clientX-x0,dy=e.clientY-y0; x0=null;
+    if(Math.abs(dx)>52&&Math.abs(dx)>Math.abs(dy)*1.4){ dx<0?dNext():dPrev() }});
+  st5.addEventListener("pointercancel",function(){x0=null});
+})();
 $("eBack").onclick=rating;
 $("again").onclick=function(){fresh();rail(-1);show("s0")};
 [].forEach.call(document.querySelectorAll(".dir"),function(b){b.onclick=function(){pick(Number(b.dataset.d))}});
 $("sl").addEventListener("input",function(){st.conf=Number(this.value);$("cvp").textContent=st.conf+"%";$("cvw").textContent=word(st.conf)});
 document.addEventListener("keydown",function(e){
   if(e.key==="Escape"){$("menu").classList.remove("on");return}
+  if($("s5").classList.contains("on")){
+    if(e.key==="ArrowRight"||e.key==="Enter"||e.key===" "){e.preventDefault();dNext()}
+    else if(e.key==="ArrowLeft"){e.preventDefault();dPrev()}
+    return}
   if($("s0").classList.contains("on")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();st.mode=0;modeIntro();return}
   if($("s1").classList.contains("on")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();startMode();return}
   if(!$("s2").classList.contains("on"))return;
